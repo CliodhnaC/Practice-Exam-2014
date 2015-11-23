@@ -1,3 +1,5 @@
+require_relative 'random_player'
+
 class Oracle
   def initialize
     @secret_number = rand(1001)

@@ -8,8 +8,8 @@ class RandomPlayer
 
   def guess
     guess = rand(@range)
-    @result = oracle.is_it?(guess)
-    if result == true
+    @result = @oracle.is_it?(guess)
+    if @result == true
       puts "#{@player_name} guessed #{guess} and won!"
     else
       puts "#{@player_name} guessed #{guess}"
