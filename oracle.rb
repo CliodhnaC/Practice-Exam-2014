@@ -12,9 +12,12 @@ class Oracle
 
   def is_it? (guess)
     if @secret_number == guess
-      return true
+      return true, 'perfect'
+    elsif guess > @secret_number
+      return false, 'less'
+    elsif guess < @secret_number
+      return false, 'more'
     end
-    return false
   end
 end
 
