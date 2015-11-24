@@ -1,34 +1,20 @@
 class SmartPlayer
-  def initialize (player_name, oracle, range)
-    @player_name = player_name
-    @oracle = oracle
-    @range = range
-    @result = false
-  end
 
   def guess
-    puts "Range is: #{@range}"
-    guess = rand(@range)
+    super()
+    update_range(@range, instruction)
+  end
 
-    returned_information = @oracle.is_it?(guess)
-    @result = returned_information[0]
-
-    if @result == true
-      puts "#{@player_name} guessed #{guess} and won!"
+  def update_range (range, instruction)
+    if instruction == 'less'
+      min_range = range.begin
+      return range = min_range..guess
+    elsif instruction == 'more'
+      max_range = range.end
+      return range = guess..max_range
     else
-      puts "#{@player_name} guessed #{guess}"
-      if returned_information[1] == 'less'
-        min_range = @range.begin
-        @range = min_range..guess
-      else
-        max_range = @range.end
-        @range = guess..max_range
-      end
+      return range
     end
-
   end
 
-  def has_won?
-    @result
-  end
 end
