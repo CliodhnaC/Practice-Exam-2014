@@ -1,19 +1,26 @@
-class SmartPlayer
+require_relative 'player'
+
+class SmartPlayer < Player
 
   def guess
-    super()
-    update_range(@range, instruction)
-  end
+    puts "Range is: #{@range}"
+    guess = rand(@range)
 
-  def update_range (range, instruction)
-    if instruction == 'less'
-      min_range = range.begin
-      return range = min_range..guess
-    elsif instruction == 'more'
-      max_range = range.end
-      return range = guess..max_range
+    returned_information = @oracle.is_it?(guess)
+    @result = returned_information[0]
+    @instruction = returned_information[1]
+
+    if @result == true
+      puts "#{@player_name} guessed #{guess} and won!"
     else
-      return range
+      puts "#{@player_name} guessed #{guess}"
+      if returned_information[1] == 'less'
+        min_range = @range.begin
+        @range = min_range..guess
+      else
+        max_range = @range.end
+        @range = guess..max_range
+      end
     end
   end
 
