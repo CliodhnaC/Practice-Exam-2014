@@ -5,25 +5,22 @@ require_relative 'sequential_player'
 
 class GuessIt
   my_oracle = Oracle.new
-  # ... excluding max, .. including max
-  player_john = RandomPlayer.new('John', my_oracle, (0..1000))
+  given_range = (0..1000)
+  player_array = [RandomPlayer.new('John', my_oracle, given_range), SequentialPlayer.new('Niamh', my_oracle, given_range), SmartPlayer.new('Aoife', my_oracle, given_range)]
 
-  puts 'AND NOW WE HAVE PLAYER ONE!!!!'
-  # John's not playing for the minute
-  while player_john.has_won? == false do
-    player_john.guess
+  until player_array[0].has_won? && player_array[1].has_won? && player_array[2].has_won?
+    player_array.each_index do |i|
+      if !player_array[i].has_won?
+        player_array[i].guess
+      end
+    end
   end
 
-  player_aoife = SmartPlayer.new('Aoife', my_oracle, (1..1000))
+  player_array.sort_by!{|player| player.guess_count}
 
-  puts 'PLAYER TWO TAKES THE STAGE!!'
-  while player_aoife.has_won? == false do
-    player_aoife.guess
+  puts 'FINAL RESULTS'
+  player_array.each_index do |index|
+    puts "#{player_array[index].player_name} took #{player_array[index].guess_count}"
   end
 
-  player_nidhi = SequentialPlayer.new('Nidhi', my_oracle, (1..1000))
-  puts 'PLAYER THREE IS UP'
-  while player_nidhi.has_won? == false do
-    player_nidhi.guess
-  end
 end
