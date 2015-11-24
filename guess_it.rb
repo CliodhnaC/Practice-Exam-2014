@@ -1,6 +1,7 @@
 require_relative 'oracle'
 require_relative 'random_player'
 require_relative 'smart_player'
+require_relative 'sequential_player'
 
 class GuessIt
   my_oracle = Oracle.new
@@ -18,5 +19,11 @@ class GuessIt
   puts 'PLAYER TWO TAKES THE STAGE!!'
   while player_aoife.has_won? == false do
     player_aoife.guess
+  end
+
+  player_nidhi = SequentialPlayer.new('Nidhi', my_oracle, (1..1000))
+  puts 'PLAYER THREE IS UP'
+  while player_nidhi.has_won? == false do
+    player_nidhi.guess
   end
 end
